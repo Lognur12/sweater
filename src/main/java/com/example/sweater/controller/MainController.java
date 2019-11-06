@@ -50,25 +50,25 @@ public class MainController {
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
-            @RequestParam("file") MultipartFile file,
             @RequestParam String text,
-            @RequestParam String tag, Map<String, Object> model
+            @RequestParam String tag, Map<String, Object> model,
+            @RequestParam("file") MultipartFile file
     ) throws IOException {
         Message message = new Message(text, tag, user);
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
-            if(!uploadDir.exists()){
+            if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
 
             String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
 
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
 
-            message.setFilename(resultFileName);
+            message.setFilename(resultFilename);
         }
 
         messageRepo.save(message);
