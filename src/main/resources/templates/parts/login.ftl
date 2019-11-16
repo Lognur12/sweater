@@ -32,7 +32,7 @@
         <div class="col-sm-6">
             <input type="password" name="password2"
                    class="form-control ${(password2Error??)?string('is-invalid', '')}"
-                   placeholder="Retype Password" />
+                   placeholder="Retype password" />
             <#if password2Error??>
                 <div class="invalid-feedback">
                     ${password2Error}
@@ -53,6 +53,15 @@
             </#if>
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="g-recaptcha" data-sitekey="6LfDC8MUAAAAAOEnpumxG24b6NgYXmuE23EHb7wq"></div>
+        <#if captchaError??>
+            <div class="alert alert-danger" role="alert">
+                ${captchaError}
+            </div>
+        </#if>
+    </div>
+
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
